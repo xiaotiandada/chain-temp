@@ -1,18 +1,21 @@
 import { ethers } from 'ethers';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useWallet } from 'use-wallet';
 
 export function useSigner(addressOrIndex?: string | number) {
   const wallet = useWallet();
   const signer = useMemo(() => {
     if (!wallet.ethereum) return null;
-    const provider = new ethers.providers.Web3Provider(wallet.ethereum as any);
+    const provider = new ethers.providers.Web3Provider(wallet.ethereum as ReturnType<typeof wallet.ethereum>);
+    console.log('provider', provider)
+
     return provider.getSigner(addressOrIndex);
-  }, [wallet.ethereum]);
+  }, [wallet, addressOrIndex]);
 
   function isSignerReady(
     signer: ethers.providers.JsonRpcSigner | null
   ): signer is ethers.providers.JsonRpcSigner {
+    console.log('signer', signer)
     return Boolean(signer);
   }
 

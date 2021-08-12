@@ -23,8 +23,9 @@ export function useERC20Single(tokenAddress: string) {
 
   const token = useMemo(() => {
     const readonlyProvider = currentProvider as ethers.providers.Provider;
-    if (!tokenAddress)
+    if (!tokenAddress) {
       return BaseErc20Factory.connect(ZERO_ADDRESS, readonlyProvider);
+    }
     if (isSignerReady(signer)) {
       return BaseErc20Factory.connect(tokenAddress, signer);
     } else {
@@ -49,6 +50,7 @@ export function useERC20Single(tokenAddress: string) {
     if (token.address === ZERO_ADDRESS) return;
 
     setTokenProfile(profileWhileLoading);
+    console.log('getProfileOfERC20 token', token);
     const profile = await getProfileOfERC20(token, account);
     console.log('getProfileOfERC20 res', profile);
     setTokenProfile(profile);

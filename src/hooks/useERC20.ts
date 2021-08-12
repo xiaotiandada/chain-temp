@@ -13,14 +13,15 @@ export function useERC20(tokenAddress: string) {
 
   const token = useMemo(() => {
     const readonlyProvider = currentProvider as ethers.providers.Provider;
-    if (!tokenAddress)
+    if (!tokenAddress) {
       return BaseErc20Factory.connect(ZERO_ADDRESS, readonlyProvider);
+    }
     if (isSignerReady(signer)) {
       return BaseErc20Factory.connect(tokenAddress, signer);
     } else {
       return BaseErc20Factory.connect(tokenAddress, readonlyProvider);
     }
-  }, [tokenAddress, signer]);
+  }, [tokenAddress, signer, isSignerReady]);
 
   const profileWhileLoading: ERC20Profile = {
     tokenAddress: ZERO_ADDRESS,
