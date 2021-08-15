@@ -23,7 +23,7 @@ export async function getProfileOfERC20(
     token.interface.encodeFunctionData('decimals'),
   ];
 
-  // 如果有持有者账号
+  // 如果有持有者账号 查询余额
   if (holder) {
     frag.push(token.interface.encodeFunctionData('balanceOf', [holder]));
   }

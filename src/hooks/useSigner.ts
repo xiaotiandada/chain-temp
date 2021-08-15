@@ -2,8 +2,14 @@ import { ethers } from 'ethers';
 import { useMemo } from 'react';
 import { useWallet } from 'use-wallet';
 
+/**
+ * 签名
+ * @param addressOrIndex
+ * @returns
+ */
 export function useSigner(addressOrIndex?: string | number) {
   const wallet = useWallet();
+
   const signer = useMemo(() => {
     if (!wallet.ethereum) return null;
     const provider = new ethers.providers.Web3Provider(wallet.ethereum as ReturnType<typeof wallet.ethereum>);

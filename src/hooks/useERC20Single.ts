@@ -17,6 +17,12 @@ const profileWhileLoading: ERC20Profile = {
 };
 
 // no loop
+
+/**
+ * ERC20
+ * @param tokenAddress 
+ * @returns 
+ */
 export function useERC20Single(tokenAddress: string) {
   const { account } = useWallet();
   const { signer, isSignerReady } = useSigner();
