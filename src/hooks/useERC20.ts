@@ -7,6 +7,11 @@ import { ZERO_ADDRESS } from '../constant';
 import { currentProvider } from '../constant/providers';
 import { useSigner } from './useSigner';
 
+/**
+ * 同 Single 多一个 Loop 查询
+ * @param tokenAddress
+ * @returns
+ */
 export function useERC20(tokenAddress: string) {
   const { account } = useWallet();
   const { signer, isSignerReady } = useSigner();

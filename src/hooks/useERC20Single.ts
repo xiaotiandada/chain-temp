@@ -21,6 +21,7 @@ export function useERC20Single(tokenAddress: string) {
   const { account } = useWallet();
   const { signer, isSignerReady } = useSigner();
 
+  // token contract
   const token = useMemo(() => {
     const readonlyProvider = currentProvider as ethers.providers.Provider;
     if (!tokenAddress) {
@@ -33,14 +34,17 @@ export function useERC20Single(tokenAddress: string) {
     }
   }, [tokenAddress, isSignerReady, signer]);
 
+  // token profile
   const [tokenProfile, setTokenProfile] = useState<ERC20Profile>(
     profileWhileLoading
   );
 
+  // loading
   const isProfileLoading = useMemo(() => tokenProfile.updatedAtBlock === 0, [
     tokenProfile,
   ]);
 
+  // format balance
   const formattedBalance = useMemo(
     () => utils.formatUnits(tokenProfile.balance, tokenProfile.decimals),
     [tokenProfile]

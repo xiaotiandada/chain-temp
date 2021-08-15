@@ -22,16 +22,27 @@ export async function getProfileOfERC20(
     token.interface.encodeFunctionData('symbol'),
     token.interface.encodeFunctionData('decimals'),
   ];
-  if (holder)
+
+  // 如果有持有者账号
+  if (holder) {
     frag.push(token.interface.encodeFunctionData('balanceOf', [holder]));
+  }
+
+  // calls
   const calls = frag.map(callData => ({
     target: tokenAddress,
     callData,
   }));
+
+  // call fn 聚合
   const {
     returnData,
     blockNumber,
   } = await staticMulticall.callStatic.aggregate(calls);
+  console.log('returnData', returnData)
+  console.log('blockNumber', blockNumber, blockNumber.toString())
+
+  // 解码 calls 数据
   const [name] = token.interface.decodeFunctionResult('name', returnData[0]);
   const [symbol] = token.interface.decodeFunctionResult(
     'symbol',
