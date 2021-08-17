@@ -2,7 +2,7 @@
   "compilerType": "solcjs",
   "compilerVersion": "0.8.0",
   "outputType": "all",
-  "sourceDirectory": "./contract/src",
-  "outputDirectory": "./contract/build",
-  "flattenOutputDirectory": "./contract/custom_flatten"
+  "sourceDirectory": "./src",
+  "outputDirectory": "./build",
+  "flattenOutputDirectory": "./custom_flatten"
 }
