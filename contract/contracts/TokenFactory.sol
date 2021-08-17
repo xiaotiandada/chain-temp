@@ -3,8 +3,8 @@ pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-// ERC20
-contract BasicToken is ERC20 {
+// ERC20 Token
+contract Token is ERC20 {
     constructor(
         string memory name,
         string memory symbol,
@@ -28,8 +28,7 @@ contract TokenFactory {
         uint256 initialBalance
     ) public {
         console.log("Create ERC20");
-
-        new BasicToken(name, symbol, initialBalance);
+        new Token(name, symbol, initialBalance);
     }
 
     function list() public view returns (uint256[] memory) {

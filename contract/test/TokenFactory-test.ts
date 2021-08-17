@@ -1,7 +1,10 @@
-const { expect } = require("chai");
+import { ethers } from "hardhat";
+import { expect } from 'chai'
 
 describe("TokenFactory", function () {
   it("TokenFactory Test", async function () {
+    this.timeout(60000);
+
     const TokenFactory = await ethers.getContractFactory("TokenFactory");
     const tokenFactory = await TokenFactory.deploy();
     await tokenFactory.deployed();
