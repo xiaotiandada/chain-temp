@@ -18,20 +18,23 @@ contract Token is ERC20 {
 contract TokenFactory {
     constructor() {}
 
-    uint256[] tokenList;
+    address[] public contracts;
 
     // mint
-    // TODO： save token list
     function mint(
         string memory name,
         string memory symbol,
         uint256 initialBalance
     ) public {
         console.log("Create ERC20");
-        new Token(name, symbol, initialBalance);
+        address contractAddress = address(
+            new Token(name, symbol, initialBalance)
+        );
+        console.log("contractAddress '%s'", contractAddress);
+        contracts.push(contractAddress);
     }
 
-    function list() public view returns (uint256[] memory) {
-        return tokenList;
+    function list() public view returns (address[] memory) {
+        return contracts;
     }
 }

@@ -22,3 +22,4 @@
   - **TokenFactory**(Bsc Test)
   - ~~0xDc86918e9f5a91470f2e7CF3b5012e2b3640d759~~
   - 0x21fe3875A3328aa2c210a4e67a1c7Ef3ceAF92e1
+  - 0x008c5c5cb4196719cbb61050d41BeEdAF01c5726

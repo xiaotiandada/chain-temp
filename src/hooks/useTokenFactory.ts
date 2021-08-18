@@ -27,7 +27,7 @@ export function useTokenFactory() {
       name: string,
       symbol: string,
       initialBalance: string
-    ) => {
+    ): Promise<ethers.ContractTransaction> => {
     const mintToken = await token.mint(name, symbol, BigNumber.from(utils.parseUnits(initialBalance, 18)))
     console.log('mintToken', mintToken)
     console.log('mintToken hash', mintToken.hash)
@@ -35,7 +35,17 @@ export function useTokenFactory() {
     return mintToken
   }, [ token ])
 
+  /**
+   * 发布过的 Token
+   */
+  const list = useCallback(
+    async (): Promise<string[]>  => {
+      const listResult = await token.list()
+      console.log('listResult', listResult)
+      return listResult
+  }, [ token ])
+
   return {
-    mint
+    mint, list
   }
 }

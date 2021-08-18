@@ -14,6 +14,9 @@ describe("TokenFactory", function () {
     // wait until the transaction is mined
     await mintToken.wait();
 
+    const list = await tokenFactory.list()
+    console.log('list', list)
+
     expect('').to.equal('');
   });
 });

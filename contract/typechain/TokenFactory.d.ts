@@ -21,16 +21,22 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface TokenFactoryInterface extends ethers.utils.Interface {
   functions: {
+    "contracts(uint256)": FunctionFragment;
     "list()": FunctionFragment;
     "mint(string,string,uint256)": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "contracts",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "list", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "mint",
     values: [string, string, BigNumberish]
   ): string;
 
+  decodeFunctionResult(functionFragment: "contracts", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "list", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
 
@@ -81,7 +87,9 @@ export class TokenFactory extends BaseContract {
   interface: TokenFactoryInterface;
 
   functions: {
-    list(overrides?: CallOverrides): Promise<[BigNumber[]]>;
+    contracts(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+
+    list(overrides?: CallOverrides): Promise<[string[]]>;
 
     mint(
       name: string,
@@ -91,7 +99,9 @@ export class TokenFactory extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  list(overrides?: CallOverrides): Promise<BigNumber[]>;
+  contracts(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+  list(overrides?: CallOverrides): Promise<string[]>;
 
   mint(
     name: string,
@@ -101,7 +111,9 @@ export class TokenFactory extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    list(overrides?: CallOverrides): Promise<BigNumber[]>;
+    contracts(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    list(overrides?: CallOverrides): Promise<string[]>;
 
     mint(
       name: string,
@@ -114,6 +126,11 @@ export class TokenFactory extends BaseContract {
   filters: {};
 
   estimateGas: {
+    contracts(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     list(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
@@ -125,6 +142,11 @@ export class TokenFactory extends BaseContract {
   };
 
   populateTransaction: {
+    contracts(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     list(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
