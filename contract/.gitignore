@@ -3,3 +3,5 @@
 #Hardhat files
 cache
 artifacts
+
+config.ts

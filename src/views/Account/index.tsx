@@ -7,8 +7,10 @@ import { isEmpty } from 'lodash'
 
 import { balanceDecimal, shortedWalletAccount } from '../../utils/index'
 import TokenListSelect from '../../components/TokenListSelect/index'
+import Mint from './Components/Mint'
 import { StandardTokenProfile } from '../../typing/TokenList'
 import { useERC20Single } from '../../hooks/useERC20Single';
+
 
 const { Text } = Typography;
 
@@ -82,6 +84,10 @@ const Account: React.FC = () => {
               isModalVisible={isModalVisible}
               setIsModalVisible={setIsModalVisible}
             ></TokenListSelect>
+          </Card>
+          <br />
+          <Card>
+            <Mint></Mint>
           </Card>
         </>
       ) : (

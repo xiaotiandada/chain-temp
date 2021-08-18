@@ -11,6 +11,7 @@ export type ServiceAddressBook = {
     [contractName: string]: string;
     MARKET: string;
     MEDIA: string;
+    TOKENFACTTORY: string
   };
 };
 
@@ -18,10 +19,12 @@ export const CONTRACTS: ServiceAddressBook = {
   [ChainId.BSC_TESTNET]: {
     MARKET: '0xAa9a113D8a8a62962578BFf1Be9dAB70336971B5',
     MEDIA: '0x520B66a0fEC5335Aba9f34774AAE8bfc2C27d234',
+    TOKENFACTTORY: '0x21fe3875A3328aa2c210a4e67a1c7Ef3ceAF92e1'
   },
   [ChainId.BSC_MAINNET]: {
     MARKET: '0x456bd9F5e006A27ec446DC2978e025590703823C',
     MEDIA: '0x75CB5AB6778454644cB6b0149c59dE99303fcaDf',
+    TOKENFACTTORY: ''
   },
 };
 
