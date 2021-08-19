@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { List, Divider } from "antd";
+import { List, Divider, Form, Input, Button, notification } from "antd";
+import { utils } from 'ethers'
+
 import { useTokenFactory } from '../../../hooks/useTokenFactory'
-import { Form, Input, Button, notification } from 'antd';
+import { useERC20Multicall } from '../../../hooks/useERC20Multicall'
 
 function Mint() {
-  const { mint, list } = useTokenFactory()
   const [form] = Form.useForm();
   const [tokenList, setTokenList] = useState<string[]>([]);
+
+  const { mint, list } = useTokenFactory()
+  const { tokenData } =  useERC20Multicall(tokenList)
 
   const onFinish = async (values: any) => {
     console.log('Success:', values);
@@ -84,10 +88,15 @@ function Mint() {
       <br />
       <List
         bordered
-        dataSource={tokenList}
+        dataSource={tokenData}
         renderItem={item => (
           <List.Item>
-            {item}
+            <span>Address: {item.address}</span>
+            <span>Name: {item.data.name}</span>
+            <span>Symbol: {item.data.symbol}</span>
+            <span>Decimals: {item.data.decimals}</span>
+            <span>TotalSupply: {utils.formatUnits(item.data.totalSupply, item.data.decimals)}</span>
+            <span>BalanceOf: {utils.formatUnits(item.data.balanceOf, item.data.decimals)}</span>
           </List.Item>
         )}
       />

@@ -48,7 +48,7 @@ export class BaseErc20Factory extends ContractFactory {
   }
 }
 
-const _abi = [
+export const _abi = [
   {
     inputs: [
       {

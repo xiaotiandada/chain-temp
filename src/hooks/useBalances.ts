@@ -40,6 +40,8 @@ export function useBalances(tokens: string[]) {
     // const result = await tokens.balanceOf(account as string);
     // setBalances(result);
 
+    console.log('balanceOfInterface', balanceOfInterface)
+
     // calls 处理 multicall 数据
     const calls = checksumedTokenAddresses.map(target => ({
       target,
