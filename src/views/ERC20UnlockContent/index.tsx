@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { Button, Page, Text } from '@geist-ui/core'
 import { Plus } from '@geist-ui/icons'
 import { parseUnits } from 'ethers/lib/utils'
+import { useWallet } from "use-wallet";
 
 const tokens = [{
   "name": "Dai Stablecoin",
@@ -36,16 +38,23 @@ const tokens = [{
 }]
 
 const ERC20UnlockContent = () => {
+  const wallet = useWallet()
 
   const send = () => {
-    console.log('PostSnippet start')
+    if (wallet && wallet.status !== 'connected') return
+    console.log('PostSnippet start', wallet)
+
+    const blockNumber = wallet.getBlockNumber()
+
+    console.log('PostSnippet blockNumber', blockNumber)
+
     const time = Date.now()
 
     const token = tokens[3]
 
     const title = `Title ${time}`
     const content = `**content** ${time}`
-    const owner = ''
+    const owner = wallet.account
     const requirement = {
       networkId: token.chainId,
       token: token.address,
@@ -60,10 +69,17 @@ const ERC20UnlockContent = () => {
   return (
     <Page>
       <Text h1>ERC20 Unlock content</Text>
-      <Button auto type="success-light" onClick={send}>
-        Post Snippet
-        <Plus />
-      </Button>
+      {
+        wallet.status !== 'connected'
+          ? <Button auto type="success-light" onClick={() => wallet.connect()}>
+            Connect
+            <Plus />
+          </Button>
+          : <Button auto type="success-light" onClick={send}>
+            Post Snippet
+            <Plus />
+          </Button>
+      }
     </Page>
   )
 }
