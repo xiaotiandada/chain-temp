@@ -1,10 +1,14 @@
 import React from 'react';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
 import Account from './views/Account';
+import ERC20UnlockContent from './views/ERC20UnlockContent';
 
 function App() {
   return (
-    <Account></Account>
+    <Routes>
+      <Route path="/" element={<Account />} />
+      <Route path="erc20-unlock-content" element={<ERC20UnlockContent />} />
+    </Routes>
   );
 }
 

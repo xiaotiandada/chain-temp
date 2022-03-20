@@ -1,15 +1,20 @@
 import React, { StrictMode } from 'react';
 import { UseWalletProvider } from 'use-wallet'
+import { GeistProvider, CssBaseline } from '@geist-ui/core'
+
 
 const Providers: React.FC = ({ children }) => {
   return (
     <StrictMode>
-      <UseWalletProvider
-        chainId={97}
-        connectors={{}}
-      >
-        {children}
-      </UseWalletProvider>
+      <GeistProvider>
+        <CssBaseline />
+        <UseWalletProvider
+          chainId={4}
+          connectors={{}}
+        >
+          {children}
+        </UseWalletProvider>
+      </GeistProvider>
     </StrictMode>
   )
 }

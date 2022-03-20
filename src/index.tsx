@@ -1,15 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'antd/dist/antd.css';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Providers from './providers/index'
+import { BrowserRouter } from "react-router-dom";
+
+import App from './App';
+
+import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
     <Providers>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Providers>
   </React.StrictMode>,
   document.getElementById('root')
