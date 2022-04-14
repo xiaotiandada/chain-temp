@@ -19,7 +19,7 @@ export const providers: {
   //     'kovan',
   //     process.env.NEXT_PUBLIC_ALCHEMY_APIKEY,
   //   ),
-  [ChainId.RINKEBY]: new ethers.providers.InfuraProvider("rinkeby", ""),
+  [ChainId.RINKEBY]: ethers.providers.getDefaultProvider("rinkeby"),
   //   [ChainId.GÖRLI]: new ethers.providers.AlchemyProvider(
   //     'gorli',
   //     process.env.NEXT_PUBLIC_ALCHEMY_APIKEY,

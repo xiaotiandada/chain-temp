@@ -3,7 +3,7 @@
 import { Button, Card, Avatar, Space, Typography, Divider } from "antd";
 import { Contract, Provider } from "ethers-multicall";
 import { ethers } from "ethers";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { _abi } from "src/blockchain/contracts/BaseErc20Factory";
 
 const provider = ethers.providers.getDefaultProvider("rinkeby");
@@ -11,6 +11,8 @@ console.log("provider", provider);
 console.log("_abi", _abi);
 
 const EthersMulticall = () => {
+  const [token, setToken] = useState<any[]>([]);
+
   useEffect(() => {
     async function init() {
       const addresses = [
@@ -38,6 +40,8 @@ const EthersMulticall = () => {
       console.log("yfiSupply", yfiSupply.toString());
       console.log("uniSupply", uniSupply.toString());
       console.log("uniSupplySymbol", uniSupplySymbol);
+
+      setToken([yfiSupply, uniSupply, uniSupplySymbol]);
     }
     init();
   }, []);
@@ -45,6 +49,7 @@ const EthersMulticall = () => {
   return (
     <Card>
       <Divider orientation="left">ethers-multicall</Divider>
+      {JSON.stringify(token)}
     </Card>
   );
 };

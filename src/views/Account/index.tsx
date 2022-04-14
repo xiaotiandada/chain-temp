@@ -8,7 +8,8 @@ import { isEmpty } from "lodash";
 import { balanceDecimal, shortedWalletAccount } from "src/utils/index";
 import TokenListSelect from "src/components/TokenListSelect/index";
 import Mint from "./Components/Mint";
-import EthersMulticall from "src/components/EthersMulticall/index";
+import EthersMulticall from "src/components/EthersMulticall";
+import Transfer from "src/components/Transfer";
 import { StandardTokenProfile } from "src/typing/TokenList";
 import { useERC20Single } from "src/hooks/useERC20Single";
 
@@ -94,6 +95,8 @@ const Account: React.FC = () => {
           </Card>
           <br />
           <EthersMulticall></EthersMulticall>
+          <br />
+          <Transfer></Transfer>
         </>
       ) : (
         <Card>
