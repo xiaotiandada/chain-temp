@@ -1,3 +1,5 @@
+export * from "./chains";
+
 /**
  * 短钱包账号
  * @param account

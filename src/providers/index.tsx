@@ -1,8 +1,7 @@
 import React, { StrictMode } from 'react';
 import { UseWalletProvider } from 'use-wallet'
 import { GeistProvider, CssBaseline } from '@geist-ui/core'
-import { ChainId } from '../constant';
-
+import { WalletSupportedChainIds, WalletSupportedRpcUrls } from '../constant/chains';
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -10,7 +9,14 @@ const Providers: React.FC = ({ children }) => {
       <GeistProvider>
         <CssBaseline />
         <UseWalletProvider
-          chainId={ChainId.RINKEBY}
+          connectors={{
+            injected: { chainId: WalletSupportedChainIds },
+            walletconnect: {
+              rpc: WalletSupportedRpcUrls,
+              bridge: 'https://bridge.walletconnect.org',
+              pollingInterval: 12000,
+            },
+          }}
         >
           {children}
         </UseWalletProvider>

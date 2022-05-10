@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useWallet } from 'use-wallet'
 import { utils } from 'ethers'
-import { Button, Card, Avatar, Space, Typography } from 'antd'
+import { Card, Space, Typography } from 'antd'
 import { UserOutlined } from '@ant-design/icons';
 import { isEmpty } from 'lodash'
-
+import { Button, Avatar } from '@geist-ui/core'
 import { balanceDecimal, shortedWalletAccount } from '../../utils/index'
 import TokenListSelect from '../../components/TokenListSelect/index'
 import Mint from './Components/Mint'
@@ -14,7 +14,7 @@ import { useERC20Single } from '../../hooks/useERC20Single';
 
 const { Text } = Typography;
 
-const Account: React.FC = () => {
+const Home: React.FC = () => {
   const wallet = useWallet()
   const blockNumber = wallet.getBlockNumber()
   const [currency, setCurrency] = useState<string>('');
@@ -46,15 +46,22 @@ const Account: React.FC = () => {
       {wallet.status === 'connected' ? (
         <>
           <Card>
-            <div>Account: {wallet.account}</div>
-            <div>Account: {shortedWalletAccount(wallet.account)}</div>
-            <div>Balance: {wallet.balance}</div>
-            <div>Balance: {utils.formatUnits(wallet.balance, 18)}</div>
-            <div>
-              Balance:{' '}
-              {balanceDecimal(utils.formatUnits(wallet.balance, 18), 3)}
-            </div>
-            <div>blockNumber: {blockNumber}</div>
+            <ul>
+              <li><span>Account: </span><span>{wallet.account}</span></li>
+              <li><span>Account: </span><span>{shortedWalletAccount(wallet.account)}</span></li>
+              <li><span>Balance: </span><span>{wallet.balance}</span></li>
+              <li><span>Balance: </span><span>{utils.formatUnits(wallet.balance, 18)}</span></li>
+              <li><span>Balance: </span><span>{balanceDecimal(utils.formatUnits(wallet.balance, 18), 3)}</span></li>
+              <li><span>blockNumber: </span><span>{blockNumber}</span></li>
+              <li><span>chainId: </span><span>{wallet.chainId}</span></li>
+              <li><span>networkName: </span><span>{wallet.networkName}</span></li>
+              <li><span>status: </span><span>{wallet.status}</span></li>
+              <li><span>providerInfo name: </span><span>{wallet.providerInfo.name}</span></li>
+              <li><span>providerInfo id: </span><span>{wallet.providerInfo.id}</span></li>
+              <li><span>providerInfo type: </span><span>{wallet.providerInfo.type}</span></li>
+              <li><span>providerInfo strings: </span><span>{JSON.stringify(wallet.providerInfo.strings)}</span></li>
+              <li><span>providerInfo image: </span><span><Avatar isSquare src={wallet.providerInfo.image} /></span></li>
+            </ul>
             <Button onClick={() => wallet.reset()}>disconnect</Button>
           </Card>
           <br />
@@ -66,8 +73,7 @@ const Account: React.FC = () => {
                 <>
                   <Space>
                     <Avatar
-                      size={30}
-                      icon={<UserOutlined />}
+                      // icon={<UserOutlined />}
                       src={currentToken.logoURI}
                     />
                     <Text strong>{currentToken.symbol}({currentToken.name})</Text>
@@ -100,4 +106,4 @@ const Account: React.FC = () => {
   )
 }
 
-export default Account
+export default Home

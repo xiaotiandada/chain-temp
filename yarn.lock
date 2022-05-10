@@ -1907,10 +1907,10 @@
     "@ethersproject/properties" "^5.4.0"
     "@ethersproject/strings" "^5.4.0"
 
-"@geist-ui/core@^2.3.7":
-  version "2.3.7"
-  resolved "https://registry.yarnpkg.com/@geist-ui/core/-/core-2.3.7.tgz#3760633168007f4be6f181685ce94ad7425b60c2"
-  integrity sha512-jVPsqtVI4WFrB9OhIwfnlXL8Xw93IRlh0L33Kj4VUmA+yF1tgIq/aDnN73cFwrxHNDIOSsteG7/ql7AApLnEOw==
+"@geist-ui/core@^2.3.8":
+  version "2.3.8"
+  resolved "https://registry.yarnpkg.com/@geist-ui/core/-/core-2.3.8.tgz#bc2bae61b8d478d61a045d776455ba5a3dc7472e"
+  integrity sha512-OKwGgTA4+fBM41eQbqDoUj4XBycZbYH7Ynrn6LPO5yKX7zeWPu/R7HN3vB4/oHt34VTDQI5sDNb1SirHvNyB5w==
   dependencies:
     "@babel/runtime" "^7.16.7"
 
@@ -16656,10 +16656,8 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
