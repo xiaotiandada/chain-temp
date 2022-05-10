@@ -1,4 +1,3 @@
-
 export enum ChainId {
   MAINNET = 1,
   ROPSTEN = 3,
@@ -9,6 +8,6 @@ export enum ChainId {
   BSC_TESTNET = 97,
 }
 
-export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-export const currentChainId = Number(97) as ChainId;
+export const currentChainId = Number(ChainId.RINKEBY) as ChainId;

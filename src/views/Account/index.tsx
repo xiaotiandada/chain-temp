@@ -5,12 +5,13 @@ import { Card, Space, Typography } from 'antd'
 import { UserOutlined } from '@ant-design/icons';
 import { isEmpty } from 'lodash'
 import { Button, Avatar } from '@geist-ui/core'
-import { balanceDecimal, shortedWalletAccount } from '../../utils/index'
-import TokenListSelect from '../../components/TokenListSelect/index'
-import Mint from './Components/Mint'
-import { StandardTokenProfile } from '../../typing/TokenList'
-import { useERC20Single } from '../../hooks/useERC20Single';
-
+import { balanceDecimal, shortedWalletAccount } from "src/utils/index";
+import TokenListSelect from "src/components/TokenListSelect/index";
+import Mint from "./Components/Mint";
+import EthersMulticall from "src/components/EthersMulticall";
+import Transfer from "src/components/Transfer";
+import { StandardTokenProfile } from "src/typing/TokenList";
+import { useERC20Single } from "src/hooks/useERC20Single";
 
 const { Text } = Typography;
 
@@ -23,27 +24,24 @@ const Home: React.FC = () => {
   );
 
   useEffect(() => {
-    console.log('wallet', wallet)
-  }, [wallet])
+    console.log("wallet", wallet);
+  }, [wallet]);
 
   const handlerSelectCurrentToken = (token: StandardTokenProfile) => {
-    console.log('token', token);
+    console.log("token", token);
     setCurrency(token.address);
     setCurrentToken(token);
-  }
+  };
 
-  const {
-    tokenProfile,
-    formattedBalance,
-  } = useERC20Single(currency);
+  const { tokenProfile, formattedBalance } = useERC20Single(currency);
 
   // modal 显示/隐藏
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
     <div style={{ padding: 20 }}>
       <h1>Wallet</h1>
-      {wallet.status === 'connected' ? (
+      {wallet.status === "connected" ? (
         <>
           <Card>
             <ul>
@@ -66,23 +64,27 @@ const Home: React.FC = () => {
           </Card>
           <br />
           <Card>
-            <Button onClick={() => setIsModalVisible(true)}>Select</Button>
+            <Button onClick={() => setIsModalVisible(true)}>
+              Select
+            </Button>
             <div>{currency}</div>
             <>
-              {!isEmpty(currentToken) ?
+              {!isEmpty(currentToken) ? (
                 <>
                   <Space>
                     <Avatar
                       // icon={<UserOutlined />}
                       src={currentToken.logoURI}
                     />
-                    <Text strong>{currentToken.symbol}({currentToken.name})</Text>
+                    <Text strong>
+                      {currentToken.symbol}({currentToken.name})
+                    </Text>
                   </Space>
                   <div>decimals: {currentToken.decimals}</div>
                   <div>chainId: {currentToken.chainId}</div>
                   <div>balance: {formattedBalance}</div>
-                </> : null
-              }
+                </>
+              ) : null}
             </>
 
             <TokenListSelect
@@ -95,15 +97,21 @@ const Home: React.FC = () => {
           <Card>
             <Mint></Mint>
           </Card>
+          <br />
+          <EthersMulticall></EthersMulticall>
+          <br />
+          <Transfer></Transfer>
         </>
       ) : (
         <Card>
           Connect:
-          <Button onClick={() => wallet.connect()}>MetaMask</Button>
+          <Button onClick={() => wallet.connect()}>
+            MetaMask
+          </Button>
         </Card>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default Home

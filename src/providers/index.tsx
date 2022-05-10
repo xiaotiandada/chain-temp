@@ -22,7 +22,7 @@ const Providers: React.FC = ({ children }) => {
         </UseWalletProvider>
       </GeistProvider>
     </StrictMode>
-  )
-}
+  );
+};
 
-export default Providers
+export default Providers;
