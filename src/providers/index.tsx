@@ -1,7 +1,20 @@
-import React, { StrictMode } from 'react';
-import { UseWalletProvider } from 'use-wallet'
-import { GeistProvider, CssBaseline } from '@geist-ui/core'
-import { WalletSupportedChainIds, WalletSupportedRpcUrls } from '../constant/chains';
+import React, { StrictMode } from "react";
+import { UseWalletProvider } from "use-wallet";
+import { GeistProvider, CssBaseline } from "@geist-ui/core";
+import {
+  WalletSupportedChainIds,
+  WalletSupportedRpcUrls,
+} from "../constant/chains";
+import { Mainnet, Rinkeby, DAppProvider, Config } from "@usedapp/core";
+import { getDefaultProvider } from "ethers";
+
+const config: Config = {
+  readOnlyChainId: Mainnet.chainId,
+  readOnlyUrls: {
+    [Mainnet.chainId]: getDefaultProvider("mainnet"),
+    [Rinkeby.chainId]: getDefaultProvider("rinkeby"),
+  },
+};
 
 const Providers: React.FC = ({ children }) => {
   return (
@@ -13,12 +26,12 @@ const Providers: React.FC = ({ children }) => {
             injected: { chainId: WalletSupportedChainIds },
             walletconnect: {
               rpc: WalletSupportedRpcUrls,
-              bridge: 'https://bridge.walletconnect.org',
+              bridge: "https://bridge.walletconnect.org",
               pollingInterval: 12000,
             },
           }}
         >
-          {children}
+          <DAppProvider config={config}>{children}</DAppProvider>
         </UseWalletProvider>
       </GeistProvider>
     </StrictMode>

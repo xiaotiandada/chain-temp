@@ -1,10 +1,10 @@
-// https://github.com/cavanmflynn/ethers-multicall
-
-import { Button, Card, Avatar, Space, Typography, Divider } from "antd";
 import { Contract, Provider } from "ethers-multicall";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { _abi } from "src/blockchain/contracts/BaseErc20Factory";
+import { Card, Text } from "@geist-ui/core";
+
+// https://github.com/cavanmflynn/ethers-multicall
 
 const provider = ethers.providers.getDefaultProvider("rinkeby");
 console.log("provider", provider);
@@ -48,7 +48,7 @@ const EthersMulticall = () => {
 
   return (
     <Card>
-      <Divider orientation="left">ethers-multicall</Divider>
+      <Text h3>ethers-multicall</Text>
       {JSON.stringify(token)}
     </Card>
   );
