@@ -1,34 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { useWallet } from "use-wallet";
-import { utils } from "ethers";
-import { Space, Typography } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import { isEmpty } from "lodash";
-import { Button, Avatar, Card, Text } from "@geist-ui/core";
-import { balanceDecimal, shortedWalletAccount } from "src/utils/index";
-import TokenListSelect from "src/components/TokenListSelect/index";
-import Mint from "./Components/Mint";
-import EthersMulticall from "src/components/EthersMulticall";
-import Usedapp from "src/components/Usedapp";
-import Transfer from "src/components/Transfer";
-import { StandardTokenProfile } from "src/typing/TokenList";
-import { useERC20Single } from "src/hooks/useERC20Single";
-import Wallet from "../../components/Wallet";
+import React, { useState, useEffect } from 'react';
+import { useWallet } from 'use-wallet';
+import { utils } from 'ethers';
+import { Space, Typography } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { isEmpty } from 'lodash';
+import { Button, Avatar, Card, Text } from '@geist-ui/core';
+import { balanceDecimal, shortedWalletAccount } from 'src/utils/index';
+import TokenListSelect from 'src/components/TokenListSelect/index';
+import Mint from './Components/Mint';
+import EthersMulticall from 'src/components/EthersMulticall';
+import Usedapp from 'src/components/Usedapp';
+import Transfer from 'src/components/Transfer';
+import { StandardTokenProfile } from 'src/typing/TokenList';
+import { useERC20Single } from 'src/hooks/useERC20Single';
+import Wallet from '../../components/Wallet';
+import DePay from 'src/components/DePay';
 
 const Home: React.FC = () => {
   const wallet = useWallet();
   const blockNumber = wallet.getBlockNumber();
-  const [currency, setCurrency] = useState<string>("");
+  const [currency, setCurrency] = useState<string>('');
   const [currentToken, setCurrentToken] = useState<StandardTokenProfile>(
     {} as StandardTokenProfile
   );
 
   useEffect(() => {
-    console.log("wallet", wallet);
+    console.log('wallet', wallet);
   }, [wallet]);
 
   const handlerSelectCurrentToken = (token: StandardTokenProfile) => {
-    console.log("token", token);
+    console.log('token', token);
     setCurrency(token.address);
     setCurrentToken(token);
   };
@@ -44,7 +45,8 @@ const Home: React.FC = () => {
       <Wallet />
       <EthersMulticall />
       <Usedapp />
-      {wallet.status === "connected" ? (
+      <DePay />
+      {wallet.status === 'connected' ? (
         <>
           <Card>
             <Button onClick={() => setIsModalVisible(true)}>Select</Button>
