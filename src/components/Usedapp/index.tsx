@@ -47,6 +47,7 @@ const Usedapp = () => {
         useEtherBalance: {etherBalance && utils.formatUnits(etherBalance)}
       </Text>
       <Text>blockMeta: {JSON.stringify(blockMeta)}</Text>
+      <Text>blockMeta difficulty: {blockMeta.difficulty?.toString()}</Text>
       <Text>tokenAllowance: {JSON.stringify(tokenAllowance)}</Text>
       <div>
         <Button onClick={() => send()}>sendTransaction</Button>
