@@ -1,14 +1,14 @@
-import { Contract, Provider } from "ethers-multicall";
-import { ethers } from "ethers";
-import { useEffect, useState } from "react";
-import { _abi } from "src/blockchain/contracts/BaseErc20Factory";
-import { Card, Text } from "@geist-ui/core";
+import { Contract, Provider } from 'ethers-multicall';
+import { ethers, utils } from 'ethers';
+import { useEffect, useState } from 'react';
+import { _abi } from 'src/blockchain/contracts/BaseErc20Factory';
+import { Card, Text } from '@geist-ui/core';
 
 // https://github.com/cavanmflynn/ethers-multicall
 
-const provider = ethers.providers.getDefaultProvider("rinkeby");
-console.log("provider", provider);
-console.log("_abi", _abi);
+const provider = ethers.providers.getDefaultProvider('rinkeby');
+console.log('provider', provider);
+console.log('_abi', _abi);
 
 const EthersMulticall = () => {
   const [token, setToken] = useState<any[]>([]);
@@ -16,8 +16,8 @@ const EthersMulticall = () => {
   useEffect(() => {
     async function init() {
       const addresses = [
-        "0x5AB1012B03Ee56320519f06d211B7a7884A50e0a",
-        "0x5AB1012B03Ee56320519f06d211B7a7884A50e0a",
+        '0x5AB1012B03Ee56320519f06d211B7a7884A50e0a',
+        '0x5AB1012B03Ee56320519f06d211B7a7884A50e0a',
       ];
 
       const ethcallProvider = new Provider(provider);
@@ -26,7 +26,7 @@ const EthersMulticall = () => {
       const yfiContract = new Contract(addresses[0], _abi);
       const uniContract = new Contract(addresses[1], _abi);
 
-      console.log("yfiContract", yfiContract);
+      console.log('yfiContract', yfiContract);
 
       const calls = [
         yfiContract.totalSupply(),
@@ -37,9 +37,9 @@ const EthersMulticall = () => {
         calls
       );
 
-      console.log("yfiSupply", yfiSupply.toString());
-      console.log("uniSupply", uniSupply.toString());
-      console.log("uniSupplySymbol", uniSupplySymbol);
+      console.log('yfiSupply', yfiSupply.toString());
+      console.log('uniSupply', uniSupply.toString());
+      console.log('uniSupplySymbol', uniSupplySymbol);
 
       setToken([yfiSupply, uniSupply, uniSupplySymbol]);
     }
@@ -49,7 +49,9 @@ const EthersMulticall = () => {
   return (
     <Card>
       <Text h3>ethers-multicall</Text>
-      {JSON.stringify(token)}
+      <Text>yfiSupply: {utils.formatUnits(token[0], 18)}</Text>
+      <Text>uniSupply: {utils.formatUnits(token[1], 18)}</Text>
+      <Text>uniSupplySymbol: {token[2]}</Text>
     </Card>
   );
 };
