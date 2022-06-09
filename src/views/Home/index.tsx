@@ -8,7 +8,7 @@ import { Button, Avatar, Card, Text } from '@geist-ui/core';
 import { balanceDecimal, shortedWalletAccount } from 'src/utils/index';
 import TokenListSelect from 'src/components/TokenListSelect/index';
 import EthersComponent from 'src/components/EthersComponent/index';
-import Mint from './Components/Mint';
+import Mint from 'src/components/Mint';
 import EthersMulticall from 'src/components/EthersMulticall';
 import Usedapp from 'src/components/Usedapp';
 import Transfer from 'src/components/Transfer';

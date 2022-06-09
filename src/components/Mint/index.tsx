@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { List, Divider, Form, Input, Button, notification } from "antd";
-import { utils } from "ethers";
+import React, { useState } from 'react';
+import { List, Divider, Form, Input, Button, notification } from 'antd';
+import { utils } from 'ethers';
 
-import { useTokenFactory } from "../../../hooks/useTokenFactory";
-import { useERC20Multicall } from "../../../hooks/useERC20Multicall";
+import { useTokenFactory } from '../../hooks/useTokenFactory';
+import { useERC20Multicall } from '../../hooks/useERC20Multicall';
 
 function Mint() {
   const [form] = Form.useForm();
@@ -13,24 +13,24 @@ function Mint() {
   const { tokenData } = useERC20Multicall(tokenList);
 
   const onFinish = async (values: any) => {
-    console.log("Success:", values);
+    console.log('Success:', values);
     const { name, symbol, initialBalance } = values;
 
     notification.success({
-      message: "Notification",
-      description: "发布 Token",
+      message: 'Notification',
+      description: '发布 Token',
     });
 
     const mintToken = await mint(name, symbol, initialBalance);
 
     notification.success({
-      message: "Notification",
+      message: 'Notification',
       description: `${mintToken.hash}`,
     });
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log('Failed:', errorInfo);
   };
 
   const fetchTokenList = async () => {
@@ -53,7 +53,7 @@ function Mint() {
         <Form.Item
           label="Name"
           name="name"
-          rules={[{ required: true, message: "Please input name!" }]}
+          rules={[{ required: true, message: 'Please input name!' }]}
         >
           <Input />
         </Form.Item>
@@ -61,7 +61,7 @@ function Mint() {
         <Form.Item
           label="Symbol"
           name="symbol"
-          rules={[{ required: true, message: "Please input symbol!" }]}
+          rules={[{ required: true, message: 'Please input symbol!' }]}
         >
           <Input />
         </Form.Item>
@@ -69,7 +69,7 @@ function Mint() {
         <Form.Item
           label="InitialBalance"
           name="initialBalance"
-          rules={[{ required: true, message: "Please input initialBalance!" }]}
+          rules={[{ required: true, message: 'Please input initialBalance!' }]}
         >
           <Input />
         </Form.Item>
@@ -94,11 +94,11 @@ function Mint() {
             <span>Symbol: {item.data.symbol}</span>
             <span>Decimals: {item.data.decimals}</span>
             <span>
-              TotalSupply:{" "}
+              TotalSupply:{' '}
               {utils.formatUnits(item.data.totalSupply, item.data.decimals)}
             </span>
             <span>
-              BalanceOf:{" "}
+              BalanceOf:{' '}
               {utils.formatUnits(item.data.balanceOf, item.data.decimals)}
             </span>
           </List.Item>
