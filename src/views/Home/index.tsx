@@ -7,6 +7,7 @@ import { isEmpty } from 'lodash';
 import { Button, Avatar, Card, Text } from '@geist-ui/core';
 import { balanceDecimal, shortedWalletAccount } from 'src/utils/index';
 import TokenListSelect from 'src/components/TokenListSelect/index';
+import EthersComponent from 'src/components/EthersComponent/index';
 import Mint from './Components/Mint';
 import EthersMulticall from 'src/components/EthersMulticall';
 import Usedapp from 'src/components/Usedapp';
@@ -46,6 +47,7 @@ const Home: React.FC = () => {
       <EthersMulticall />
       <Usedapp />
       <DePay />
+      <EthersComponent />
       {wallet.status === 'connected' ? (
         <>
           <Card>
@@ -80,8 +82,6 @@ const Home: React.FC = () => {
           <Card>
             <Mint></Mint>
           </Card>
-          <br />
-          <EthersMulticall></EthersMulticall>
           <br />
           <Transfer></Transfer>
         </>

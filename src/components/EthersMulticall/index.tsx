@@ -43,15 +43,23 @@ const EthersMulticall = () => {
 
       setToken([yfiSupply, uniSupply, uniSupplySymbol]);
     }
-    init();
+    try {
+      init();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   return (
     <Card>
       <Text h3>ethers-multicall</Text>
-      <Text>yfiSupply: {utils.formatUnits(token[0], 18)}</Text>
-      <Text>uniSupply: {utils.formatUnits(token[1], 18)}</Text>
-      <Text>uniSupplySymbol: {token[2]}</Text>
+      {token.length && (
+        <>
+          <Text>yfiSupply: {utils.formatUnits(token[0], 18)}</Text>
+          <Text>uniSupply: {utils.formatUnits(token[1], 18)}</Text>
+          <Text>uniSupplySymbol: {token[2]}</Text>
+        </>
+      )}
     </Card>
   );
 };
