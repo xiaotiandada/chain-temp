@@ -9,13 +9,20 @@ import {
   Mainnet,
 } from '@usedapp/core';
 import { utils } from 'ethers';
+import WalletConnectProvider from '@walletconnect/web3-provider';
 
 const TOKEN = '0x5AB1012B03Ee56320519f06d211B7a7884A50e0a';
 const address = '0x3484040A7c337A95d0eD7779769ffe3e14ecCcA6';
 
 const Usedapp = () => {
-  const { account, activateBrowserWallet, deactivate, chainId, switchNetwork } =
-    useEthers();
+  const {
+    account,
+    activate,
+    activateBrowserWallet,
+    deactivate,
+    chainId,
+    switchNetwork,
+  } = useEthers();
   const etherBalance = useEtherBalance(account);
   const tokenBalance = useTokenBalance(TOKEN, account);
   const blockMeta = useBlockMeta();
@@ -27,9 +34,21 @@ const Usedapp = () => {
     void sendTransaction({ to: address, value: utils.parseEther('0.000123') });
   };
 
-  const switchNetworkFn = async () => {
+  const switchNetworkFn = () => {
     if (chainId !== Mainnet.chainId) {
-      await switchNetwork(Mainnet.chainId);
+      switchNetwork(Mainnet.chainId);
+    }
+  };
+
+  const onConnect = async () => {
+    try {
+      const provider = new WalletConnectProvider({
+        infuraId: 'b234dc4922e7482a870a092c4bf7630b',
+      });
+      await provider.enable();
+      await activate(provider);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -54,6 +73,7 @@ const Usedapp = () => {
         <p>Status: {status}</p>
       </div>
       <Button onClick={() => switchNetworkFn()}>switchNetwork</Button>
+      <Button onClick={() => onConnect()}> Wallet Connect</Button>
     </Card>
   );
 };

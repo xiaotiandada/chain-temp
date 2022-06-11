@@ -4338,6 +4338,16 @@
     eventemitter3 "4.0.7"
     xhr2-cookies "1.1.0"
 
+"@walletconnect/http-connection@^1.7.8":
+  version "1.7.8"
+  resolved "https://registry.yarnpkg.com/@walletconnect/http-connection/-/http-connection-1.7.8.tgz#98bcc726c29751ddc791ff151742aa712bf679a7"
+  integrity sha512-31gjBw46MRU9hFMTNXAqh+f8qpDNzVeV9BJehzVWKiNC3ciL1JCZkbvsY0djwajduE6TB2ujaML0XDXS9HgBRA==
+  dependencies:
+    "@walletconnect/types" "^1.7.8"
+    "@walletconnect/utils" "^1.7.8"
+    eventemitter3 "4.0.7"
+    xhr2-cookies "1.1.0"
+
 "@walletconnect/iso-crypto@^1.5.4":
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/@walletconnect/iso-crypto/-/iso-crypto-1.5.4.tgz#59c4bbf7337cf1868cb204b14c7dccee4b37c307"
@@ -4516,6 +4526,18 @@
     "@walletconnect/qrcode-modal" "^1.5.4"
     "@walletconnect/types" "^1.5.4"
     "@walletconnect/utils" "^1.5.4"
+    web3-provider-engine "16.0.1"
+
+"@walletconnect/web3-provider@^1.7.8":
+  version "1.7.8"
+  resolved "https://registry.yarnpkg.com/@walletconnect/web3-provider/-/web3-provider-1.7.8.tgz#fe9b66a4010ee831db664a3fe5014d67a758a1fc"
+  integrity sha512-2VxGo7KPfQTWRJ+rygt3ok/u04InkVE+H9LBIF/RMUwcwyGf2nsP3CcYZVcg3yYpacgN7bAZCersCEYwU8AeeA==
+  dependencies:
+    "@walletconnect/client" "^1.7.8"
+    "@walletconnect/http-connection" "^1.7.8"
+    "@walletconnect/qrcode-modal" "^1.7.8"
+    "@walletconnect/types" "^1.7.8"
+    "@walletconnect/utils" "^1.7.8"
     web3-provider-engine "16.0.1"
 
 "@walletconnect/window-getters@1.0.0", "@walletconnect/window-getters@^1.0.0":
