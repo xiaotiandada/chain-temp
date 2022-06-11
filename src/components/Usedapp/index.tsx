@@ -12,6 +12,7 @@ import {
 } from '@usedapp/core';
 import { utils } from 'ethers';
 import WalletConnectProvider from '@walletconnect/web3-provider';
+import { useState, useEffect } from 'react';
 
 const TOKEN = '0x5AB1012B03Ee56320519f06d211B7a7884A50e0a';
 const address = '0x3484040A7c337A95d0eD7779769ffe3e14ecCcA6';
@@ -24,7 +25,9 @@ const Usedapp = () => {
     deactivate,
     chainId,
     switchNetwork,
+    error,
   } = useEthers();
+  const [activateError, setActivateError] = useState('');
   const etherBalance = useEtherBalance(account);
   const tokenBalance = useTokenBalance(TOKEN, account);
   const blockMeta = useBlockMeta();
@@ -62,10 +65,22 @@ const Usedapp = () => {
     }
   };
 
+  const activateBrowserWalletActivate = async () => {
+    setActivateError('');
+    activateBrowserWallet();
+  };
+
+  useEffect(() => {
+    if (error) {
+      setActivateError(error.message);
+    }
+  }, [error]);
+
   return (
     <Card>
       <Text h3>usedapp</Text>
-      <Button onClick={() => activateBrowserWallet()}>Connect</Button>
+      <Text>error: {activateError}</Text>
+      <Button onClick={() => activateBrowserWalletActivate()}>Connect</Button>
       <Button onClick={() => deactivate()}>Disconnect</Button>
       <Text>chainId: {chainId}</Text>
       <Text>account: {account}</Text>
