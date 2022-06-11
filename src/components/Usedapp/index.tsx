@@ -9,10 +9,17 @@ import {
   Mainnet,
   ZkSyncTestnet,
   Arbitrum,
+  useContractFunction,
+  Rinkeby,
 } from '@usedapp/core';
-import { utils } from 'ethers';
+import { utils, Contract } from 'ethers';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import { useState, useEffect } from 'react';
+import {
+  WethAbi,
+  WETH_ADDRESSES,
+  SUPPORTED_TEST_CHAINS,
+} from '../../constants/Weth';
 
 const TOKEN = '0x5AB1012B03Ee56320519f06d211B7a7884A50e0a';
 const address = '0x3484040A7c337A95d0eD7779769ffe3e14ecCcA6';
@@ -34,6 +41,8 @@ const Usedapp = () => {
   const tokenAllowance = useTokenAllowance(TOKEN, account, address);
   const { sendTransaction, state } = useSendTransaction();
   const status = state.status;
+  const wethAddress = chainId ? WETH_ADDRESSES[chainId] : '';
+  const wethBalance = useTokenBalance(WETH_ADDRESSES[Rinkeby.chainId], account);
 
   const mainnetBalance = useEtherBalance(address, { chainId: Mainnet.chainId });
   const arbitrumBalance = useEtherBalance(address, {
@@ -42,6 +51,37 @@ const Usedapp = () => {
   const zkSyncBalance = useEtherBalance(address, {
     chainId: ZkSyncTestnet.chainId,
   });
+  const isSupportedChain = SUPPORTED_TEST_CHAINS.includes(chainId || -1);
+
+  const WrapEtherComponent = () => {
+    const wethInterface = new utils.Interface(WethAbi);
+    const contract = new Contract(wethAddress, wethInterface) as any;
+
+    const { state, send } = useContractFunction(contract, 'deposit', {
+      transactionName: 'Wrap',
+    });
+    const { status } = state;
+
+    const wrapEther = () => {
+      void send({ value: utils.parseEther('0.0001') });
+    };
+
+    return (
+      <div>
+        <Button onClick={() => wrapEther()}>Wrap ether</Button>
+        <p>Status: {status}</p>
+        <p>wethBalance: {wethBalance && utils.formatUnits(wethBalance, 18)}</p>
+      </div>
+    );
+  };
+
+  const ChainFilter = () => {
+    return isSupportedChain ? (
+      <WrapEtherComponent />
+    ) : (
+      <p>Set network to: Ropsten, Kovan, Rinkeby or Goerli</p>
+    );
+  };
 
   const send = () => {
     void sendTransaction({ to: address, value: utils.parseEther('0.000123') });
@@ -125,6 +165,7 @@ const Usedapp = () => {
           </p>
         </div>
       </div>
+      {account && <ChainFilter />}
     </Card>
   );
 };
