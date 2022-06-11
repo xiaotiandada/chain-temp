@@ -66,10 +66,23 @@ const Usedapp = () => {
       void send({ value: utils.parseEther('0.0001') });
     };
 
+    const { state: stateUnWrap, send: sendUnWrap } = useContractFunction(
+      contract,
+      'withdraw',
+      { transactionName: 'Unwrap' }
+    );
+    const { status: statusUnWrap } = stateUnWrap;
+
+    const withdrawEther = () => {
+      sendUnWrap(utils.parseEther('0.0001'));
+    };
+
     return (
       <div>
         <Button onClick={() => wrapEther()}>Wrap ether</Button>
+        <Button onClick={() => withdrawEther()}>Unwrap ether</Button>
         <p>Status: {status}</p>
+        <p>stateUnWrap: {statusUnWrap}</p>
         <p>wethBalance: {wethBalance && utils.formatUnits(wethBalance, 18)}</p>
       </div>
     );
