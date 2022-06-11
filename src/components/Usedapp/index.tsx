@@ -7,6 +7,8 @@ import {
   useTokenAllowance,
   useSendTransaction,
   Mainnet,
+  ZkSyncTestnet,
+  Arbitrum,
 } from '@usedapp/core';
 import { utils } from 'ethers';
 import WalletConnectProvider from '@walletconnect/web3-provider';
@@ -29,6 +31,14 @@ const Usedapp = () => {
   const tokenAllowance = useTokenAllowance(TOKEN, account, address);
   const { sendTransaction, state } = useSendTransaction();
   const status = state.status;
+
+  const mainnetBalance = useEtherBalance(address, { chainId: Mainnet.chainId });
+  const arbitrumBalance = useEtherBalance(address, {
+    chainId: Arbitrum.chainId,
+  });
+  const zkSyncBalance = useEtherBalance(address, {
+    chainId: ZkSyncTestnet.chainId,
+  });
 
   const send = () => {
     void sendTransaction({ to: address, value: utils.parseEther('0.000123') });
@@ -74,6 +84,32 @@ const Usedapp = () => {
       </div>
       <Button onClick={() => switchNetworkFn()}>switchNetwork</Button>
       <Button onClick={() => onConnect()}> Wallet Connect</Button>
+      <hr />
+      <div>
+        <div className="balance"> Account:</div>
+        <div className="inline">
+          <div className="account">{address}</div>
+        </div>
+        <br />
+        <div className="balance">
+          Balance on Mainnet:
+          <p className="bold">
+            {mainnetBalance && utils.formatEther(mainnetBalance)} Eth{' '}
+          </p>
+        </div>
+        <div className="balance">
+          Balance on Arbitrum:
+          <p className="bold">
+            {arbitrumBalance && utils.formatEther(arbitrumBalance)} AEth
+          </p>
+        </div>
+        <div className="balance">
+          Balance on ZkSync Testnet:
+          <p className="bold">
+            {zkSyncBalance && utils.formatEther(zkSyncBalance)} ZKEth
+          </p>
+        </div>
+      </div>
     </Card>
   );
 };

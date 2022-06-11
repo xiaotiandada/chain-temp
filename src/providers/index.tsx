@@ -5,7 +5,14 @@ import {
   WalletSupportedChainIds,
   WalletSupportedRpcUrls,
 } from '../constant/chains';
-import { Mainnet, Rinkeby, DAppProvider, Config } from '@usedapp/core';
+import {
+  Mainnet,
+  Rinkeby,
+  Arbitrum,
+  ZkSyncTestnet,
+  DAppProvider,
+  Config,
+} from '@usedapp/core';
 import { getDefaultProvider } from 'ethers';
 
 const config: Config = {
@@ -13,6 +20,8 @@ const config: Config = {
   readOnlyUrls: {
     [Mainnet.chainId]: getDefaultProvider('mainnet'),
     [Rinkeby.chainId]: getDefaultProvider('rinkeby'),
+    [Arbitrum.chainId]: 'https://arb1.arbitrum.io/rpc',
+    [ZkSyncTestnet.chainId]: 'https://zksync2-testnet.zksync.dev',
   },
 };
 
