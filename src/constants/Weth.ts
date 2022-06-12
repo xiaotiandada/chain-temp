@@ -165,3 +165,8 @@ export const WethAbi = [
     type: 'event',
   },
 ];
+
+export const TOKEN_ADDRESSES = {
+  [Mainnet.chainId]: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+  [Rinkeby.chainId]: '0x5AB1012B03Ee56320519f06d211B7a7884A50e0a',
+};

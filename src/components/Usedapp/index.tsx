@@ -16,14 +16,16 @@ import {
   useToken,
   useTokenList,
 } from '@usedapp/core';
-import { utils, Contract } from 'ethers';
+import { utils, Contract, providers } from 'ethers';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import { useState, useEffect } from 'react';
 import {
   WethAbi,
   WETH_ADDRESSES,
   SUPPORTED_TEST_CHAINS,
+  TOKEN_ADDRESSES,
 } from '../../constants/Weth';
+import Web3Modal from 'web3modal';
 
 const UNISWAP_DEFAULT_TOKEN_LIST_URI =
   'https://wispy-bird-88a7.uniswap.workers.dev/?url=http://tokens.1inch.eth.link';
@@ -59,8 +61,8 @@ const Usedapp = () => {
   });
   const { transactions } = useTransactions();
   const { notifications } = useNotifications();
-  const daiInfo = useToken(TOKEN);
   const isSupportedChain = SUPPORTED_TEST_CHAINS.includes(chainId || -1);
+  const daiInfo = useToken(TOKEN_ADDRESSES[chainId || Mainnet.chainId]);
   const { name, logoURI, tokens } =
     useTokenList(UNISWAP_DEFAULT_TOKEN_LIST_URI) || {};
   const httpSource =
@@ -174,6 +176,40 @@ const Usedapp = () => {
       console.error(error);
     }
   };
+  // TODO: fail
+  const onConnectModal = async () => {
+    console.log('onConnectModal');
+
+    const providerOptions = {
+      injected: {
+        display: {
+          name: 'Metamask',
+          description: 'Connect with the provider in your Browser',
+        },
+        package: null,
+      },
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          bridge: 'https://bridge.walletconnect.org',
+          infuraId: 'd8df2cb7844e4a54ab0a782f608749dd',
+        },
+      },
+    };
+
+    const web3Modal = new Web3Modal({
+      providerOptions,
+    });
+    try {
+      const instance = await web3Modal.connect();
+
+      const provider = new providers.Web3Provider(instance);
+      await activate(provider);
+      setActivateError('');
+    } catch (error: any) {
+      setActivateError(error.message);
+    }
+  };
 
   const activateBrowserWalletActivate = async () => {
     setActivateError('');
@@ -255,10 +291,21 @@ const Usedapp = () => {
       <div>
         <div>
           {name}
-          {httpSource && <img src={httpSource} alt={name} />}
+          {httpSource && (
+            <img
+              width="60"
+              height="60"
+              style={{
+                width: '60px',
+                display: 'block',
+              }}
+              src={httpSource}
+              alt={name}
+            />
+          )}
         </div>
         <ol>
-          {tokens?.map((token) => (
+          {/* {tokens?.map((token) => (
             <li>
               <ul>
                 <li>Name: {token.name}</li>
@@ -267,9 +314,10 @@ const Usedapp = () => {
                 <li>Address: {token.address}</li>
               </ul>
             </li>
-          ))}
+          ))} */}
         </ol>
       </div>
+      <Button onClick={() => onConnectModal()}>Web3Modal</Button>
     </Card>
   );
 };
