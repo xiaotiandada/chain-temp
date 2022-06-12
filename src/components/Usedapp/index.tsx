@@ -13,6 +13,8 @@ import {
   Rinkeby,
   useTransactions,
   useNotifications,
+  useToken,
+  useTokenList,
 } from '@usedapp/core';
 import { utils, Contract } from 'ethers';
 import WalletConnectProvider from '@walletconnect/web3-provider';
@@ -23,6 +25,8 @@ import {
   SUPPORTED_TEST_CHAINS,
 } from '../../constants/Weth';
 
+const UNISWAP_DEFAULT_TOKEN_LIST_URI =
+  'https://wispy-bird-88a7.uniswap.workers.dev/?url=http://tokens.1inch.eth.link';
 const TOKEN = '0x5AB1012B03Ee56320519f06d211B7a7884A50e0a';
 const address = '0x3484040A7c337A95d0eD7779769ffe3e14ecCcA6';
 
@@ -55,7 +59,14 @@ const Usedapp = () => {
   });
   const { transactions } = useTransactions();
   const { notifications } = useNotifications();
+  const daiInfo = useToken(TOKEN);
   const isSupportedChain = SUPPORTED_TEST_CHAINS.includes(chainId || -1);
+  const { name, logoURI, tokens } =
+    useTokenList(UNISWAP_DEFAULT_TOKEN_LIST_URI) || {};
+  const httpSource =
+    logoURI && logoURI.startsWith('ipfs')
+      ? logoURI.replace('ipfs://', 'https://ipfs.io/ipfs/')
+      : logoURI;
 
   const WrapEtherComponent = () => {
     const wethInterface = new utils.Interface(WethAbi);
@@ -88,6 +99,7 @@ const Usedapp = () => {
         <p>Status: {status}</p>
         <p>stateUnWrap: {statusUnWrap}</p>
         <p>wethBalance: {wethBalance && utils.formatUnits(wethBalance, 18)}</p>
+        <p>Transactions</p>
         {transactions.length !== 0 && (
           <table>
             <th>Name</th>
@@ -225,7 +237,39 @@ const Usedapp = () => {
       </div>
       {account && <ChainFilter />}
       <Button onClick={() => sendNonce()}>nonce</Button>
-      <p>Transactions</p>
+      <>
+        {daiInfo ? (
+          <>
+            <p>Dai name: {daiInfo?.name}</p>
+            <p>Dai symbol: {daiInfo?.symbol}</p>
+            <p>Dai decimals: {daiInfo?.decimals}</p>
+            <p>
+              Dai totalSupply:{' '}
+              {daiInfo?.totalSupply
+                ? utils.formatUnits(daiInfo?.totalSupply, daiInfo?.decimals)
+                : ''}
+            </p>
+          </>
+        ) : null}
+      </>
+      <div>
+        <div>
+          {name}
+          {httpSource && <img src={httpSource} alt={name} />}
+        </div>
+        <ol>
+          {tokens?.map((token) => (
+            <li>
+              <ul>
+                <li>Name: {token.name}</li>
+                <li>Symbol: {token.symbol}</li>
+                <li>Decimals: {token.decimals}</li>
+                <li>Address: {token.address}</li>
+              </ul>
+            </li>
+          ))}
+        </ol>
+      </div>
     </Card>
   );
 };
