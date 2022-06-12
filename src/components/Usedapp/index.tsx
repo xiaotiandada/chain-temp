@@ -12,6 +12,7 @@ import {
   useContractFunction,
   Rinkeby,
   useTransactions,
+  useNotifications,
 } from '@usedapp/core';
 import { utils, Contract } from 'ethers';
 import WalletConnectProvider from '@walletconnect/web3-provider';
@@ -53,6 +54,7 @@ const Usedapp = () => {
     chainId: ZkSyncTestnet.chainId,
   });
   const { transactions } = useTransactions();
+  const { notifications } = useNotifications();
   const isSupportedChain = SUPPORTED_TEST_CHAINS.includes(chainId || -1);
 
   const WrapEtherComponent = () => {
@@ -97,6 +99,23 @@ const Usedapp = () => {
                   <td>{transaction.transactionName}</td>
                   <td>{transaction.receipt?.blockHash ?? 'Pending...'}</td>
                   <td>{new Date(transaction.submittedAt).toDateString()}</td>
+                </tr>
+              );
+            })}
+          </table>
+        )}
+        <p>Notifications</p>
+        {notifications.length !== 0 && (
+          <table>
+            <th>Type</th>
+            <th>Date</th>
+            {notifications.map((notification) => {
+              // console.log('notification', notification);
+
+              return (
+                <tr>
+                  <td>{notification.type}</td>
+                  <td>{new Date(notification.submittedAt).toDateString()}</td>
                 </tr>
               );
             })}
