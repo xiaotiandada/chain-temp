@@ -11,6 +11,7 @@ import {
   Arbitrum,
   useContractFunction,
   Rinkeby,
+  useTransactions,
 } from '@usedapp/core';
 import { utils, Contract } from 'ethers';
 import WalletConnectProvider from '@walletconnect/web3-provider';
@@ -51,6 +52,7 @@ const Usedapp = () => {
   const zkSyncBalance = useEtherBalance(address, {
     chainId: ZkSyncTestnet.chainId,
   });
+  const { transactions } = useTransactions();
   const isSupportedChain = SUPPORTED_TEST_CHAINS.includes(chainId || -1);
 
   const WrapEtherComponent = () => {
@@ -84,6 +86,22 @@ const Usedapp = () => {
         <p>Status: {status}</p>
         <p>stateUnWrap: {statusUnWrap}</p>
         <p>wethBalance: {wethBalance && utils.formatUnits(wethBalance, 18)}</p>
+        {transactions.length !== 0 && (
+          <table>
+            <th>Name</th>
+            <th>Block hash</th>
+            <th>Date</th>
+            {transactions.map((transaction) => {
+              return (
+                <tr>
+                  <td>{transaction.transactionName}</td>
+                  <td>{transaction.receipt?.blockHash ?? 'Pending...'}</td>
+                  <td>{new Date(transaction.submittedAt).toDateString()}</td>
+                </tr>
+              );
+            })}
+          </table>
+        )}
       </div>
     );
   };
@@ -98,6 +116,14 @@ const Usedapp = () => {
 
   const send = () => {
     void sendTransaction({ to: address, value: utils.parseEther('0.000123') });
+  };
+
+  const sendNonce = () => {
+    void sendTransaction({
+      to: address,
+      value: utils.parseEther('0.000001'),
+      nonce: 15,
+    });
   };
 
   const switchNetworkFn = () => {
@@ -179,6 +205,8 @@ const Usedapp = () => {
         </div>
       </div>
       {account && <ChainFilter />}
+      <Button onClick={() => sendNonce()}>nonce</Button>
+      <p>Transactions</p>
     </Card>
   );
 };
